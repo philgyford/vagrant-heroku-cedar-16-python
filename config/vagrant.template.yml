@@ -1,0 +1,16 @@
+db:
+  name: postgres_db
+  user: postgres_db
+  password: postgres_db
+django:
+  settings_module: projectname.settings.vagrant
+foreman:
+  procfile: Procfile
+virtualbox:
+  name: 'MyVirtualServer'
+  memory: '512'
+virtualenv:
+  envname: myvirtualenv
+  requirements_file: requirements.txt
+use_geodjango: 'false'
+
