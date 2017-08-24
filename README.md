@@ -146,7 +146,7 @@ So I had to do this (replace `DB_NAME` with your database name):
 
 To change the version of Postgres (and PostGIS, if you're using GeoDjango), edit the variable(s) in `config/vagrant/postgresql_setup.sh`.
 
-The process above will set up a postgres database and user, but not populate the database. Database name, username and password are set in `config/vagrant.yml`.
+The process above will set up a postgres database and user, and run Django migrations, but not populate the database. Database name, username and password are set in `config/vagrant.yml`.
 
 If you have a `pg_dump` dump file, put it in the same directory as your Django project and then:
 
@@ -155,6 +155,17 @@ If you have a `pg_dump` dump file, put it in the same directory as your Django p
     vagrant$ pg_restore --verbose --clean --no-acl --no-owner -h localhost -U your_pg_username -d your_db_name your-dump-name.dump
 
 You'll be prompted for the postgres user's password, and then it should import.
+
+NOTE: You might get errors when importing due to the database tables existing.
+If you want to undo all those Django migrations, and delete all the tables, this
+seems to work (use at your own risk):
+
+	$ vagrant ssh
+	vagrant$ psql -U your_pg_username -h localhost -d your_db_name
+	=> select 'drop table "' || tablename || '" cascade;' from pg_tables where schemaname = 'public';
+	=> \q
+
+Then you can do the `pg_restore`.
 
 
 ## Environment variables
