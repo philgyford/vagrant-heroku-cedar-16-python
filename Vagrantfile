@@ -98,5 +98,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             path: 'config/vagrant/django_setup.sh',
             args: [
               settings['virtualenv']['envname'],
+              settings['django']['run_migrations'],
             ]
 end

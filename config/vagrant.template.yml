@@ -4,6 +4,7 @@ db:
   password: postgres_db
 django:
   settings_module: projectname.settings.vagrant
+  run_migrations: 'true'
 foreman:
   procfile: Procfile
 virtualbox:

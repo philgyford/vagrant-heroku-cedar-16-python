@@ -72,6 +72,10 @@ Edit the `config/vagrant.yml` file to change the following settings:
 
 `settings_module`: Specify the dotted path to the Django settings module. e.g. `myproject.settings.development` will use the settings file at `myproject/settings/development.py`.
 
+`run_migrations`: This should be `'true'` if you want the Django migrations to
+be run. If you're going to import an existing database dump (see below) you
+should set this to `'false'` (or anything other than `'true'`).
+
 ### `foreman`
 
 `procfile`: As described above, if you want to use a specific Procfile for use in the Vagrant VM, set its name here. e.g. `Procfile.dev`.
