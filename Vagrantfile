@@ -91,6 +91,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
               settings['virtualenv']['envname'],
               settings['django']['settings_module'],
               settings['foreman']['procfile'],
+              settings['foreman']['start_foreman'],
             ]
 
   config.vm.provision 'django',

@@ -7,6 +7,7 @@
 VIRTUALENV_NAME=$1
 DJANGO_SETTINGS_MODULE=$2
 PROCFILE=$3
+START_FOREMAN=$4
 
 echo "=== Begin Vagrant Provisioning using 'config/vagrant/foreman_setup.sh'"
 
@@ -20,17 +21,21 @@ fi
 
 
 if [[ -f /vagrant/$PROCFILE ]]; then
-    echo "Procfile found (${PROCFILE}); starting foreman."
+    if [ $START_FOREMAN ]; then
+        echo "Procfile found (${PROCFILE}); starting foreman."
 
-    export DJANGO_SETTINGS_MODULE="$DJANGO_SETTINGS_MODULE"
+        export DJANGO_SETTINGS_MODULE="$DJANGO_SETTINGS_MODULE"
 
-    # Ensure the virtualenv settings in .profile are loaded:
-    source /home/vagrant/.profile
+        # Ensure the virtualenv settings in .profile are loaded:
+        source /home/vagrant/.profile
 
-    # Run with & to release the terminal.
-    # Although that may also rely on the Procfile's processes having their
-    # output sent to a file, not stdout/stderr.
-    foreman start -f /vagrant/$PROCFILE &
+        # Run with & to release the terminal.
+        # Although that may also rely on the Procfile's processes having their
+        # output sent to a file, not stdout/stderr.
+        foreman start -f /vagrant/$PROCFILE &
+    else
+        echo "Not starting foreman."
+    fi
 else
     echo "No Procfile found; not starting foreman."
 fi

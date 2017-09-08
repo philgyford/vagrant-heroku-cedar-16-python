@@ -14,11 +14,12 @@ If a `requirements.txt` file is found, packages in it will be installed into the
 
 When you ssh into the VM the virtualenv will automatically be activated.
 
-If a `Procfile` is found, foreman will be started. (The filename can be configured, see below.)
+If a `Procfile` is found, and the `start_foreman` setting is `'true'`, foreman
+will be started. (The Procfile filename can be configured, see below.)
 
 The project directory (containing the `Vagrantfile`) will be availble in the VM at `/vagrant/`.
 
-If there's a `manage.py` file in the root of the project, it will be used to run Django's `migrate` and `collectstatic` commands.
+If there's a `manage.py` file in the root of the project, it will be used to run Django's `migrate` (optional) and `collectstatic` commands.
 
 
 ## Running it
@@ -29,7 +30,7 @@ If there's a `manage.py` file in the root of the project, it will be used to run
 
 3. Make a copy of `config/vagrant.template.yml` and put it at `config/vagrant.yml` in *your* project.
 
-4. If you have a Procfile, and therefore want foreman to run, you *must* change the Django `settings_module` in `config/vagrant.yml` to whatever you want the `DJANGO_SETTINGS_MODULE` environment variable in the virtual machine to be. Feel free to change any of the other config options if appropriate.
+4. If you have a Procfile, and want foreman to run, you *must* change the Django `settings_module` in `config/vagrant.yml` to whatever you want the `DJANGO_SETTINGS_MODULE` environment variable in the virtual machine to be. Feel free to change any of the other config options if appropriate.
 
     You can also change the name of the Procfile foreman should use in `config/vagrant.yml`, in case you want to use a different one in Vagrant versus production (see below).
 
@@ -80,6 +81,10 @@ should set this to `'false'` (or anything other than `'true'`).
 
 `procfile`: As described above, if you want to use a specific Procfile for use in the Vagrant VM, set its name here. e.g. `Procfile.dev`.
 
+`start_foreman`: This should be `'true'` to use foreman to run the webserver.
+Set it to `'false'` (or anything other than `'true'`) if you want to use the
+Django `runserver` command manually (see below).
+
 ### `virtualbox`
 
 `name`: This will be the name of the box as seen in the Virtualbox UI.
@@ -107,7 +112,7 @@ Then you can just `tail -f /home/vagrant/gunicorn.log` to see its output. For th
 
 Also note: We use the `--reload` option with gunicorn so that it reloads when code changes. Otherwise you'll never see changes when you make them!
 
-**However:** This still [seems to get stuck](http://stackoverflow.com/questions/38208840/restart-gunicorn-run-with-foreman-on-error) sometimes, with gunicorn's log showing "Worker failed to boot". To avoid using foreman at all change the `procfile` setting in your `config/vagrant.yml` file to something that doesn't exist (eg, `'false'`). Then you can run the Django dev server manually:
+**However:** This still [seems to get stuck](http://stackoverflow.com/questions/38208840/restart-gunicorn-run-with-foreman-on-error) sometimes, with gunicorn's log showing "Worker failed to boot". To avoid using foreman at all then set the `start_foreman` setting to `'false'`, then you can run the Django dev server manually:
 
     $ vagrant ssh
     vagrant$ /vagrant/manage.py runserver 0.0.0.0:5000
