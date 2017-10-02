@@ -62,7 +62,7 @@ else
 
     if [[ -f /vagrant/.env ]]; then
         echo "Linking /vagrant/.env to the virtualenv's postactivate hook"
-        rm /home/vagrant/.virtualenvs/pepysdiary/bin/postactivate
+        rm /home/vagrant/.virtualenvs/$VENV_NAME/bin/postactivate
         ln -s /vagrant/.env /home/vagrant/.virtualenvs/$VENV_NAME/bin/postactivate
         source /home/vagrant/.virtualenvs/$VENV_NAME/bin/postactivate
     fi
