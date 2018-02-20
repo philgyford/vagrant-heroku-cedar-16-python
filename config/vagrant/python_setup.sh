@@ -23,7 +23,9 @@ if [[ -f /vagrant/runtime.txt ]]; then
   fi
   if [[ $python_runtime =~ ^python-3\.6 ]]; then
     # Python 3.6 isn't available in Ubuntu 16.04, so:
-    add-apt-repository ppa:fkrull/deadsnakes
+    apt-get -qq -y install software-properties-common python-software-properties
+    add-apt-repository ppa:jonathonf/python-3.6
+
     apt-get -qq -y update
     apt-get -qq  -y install python3.6 python3.6-dev
   fi
