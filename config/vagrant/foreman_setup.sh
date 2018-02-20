@@ -21,7 +21,7 @@ fi
 
 
 if [[ -f /vagrant/$PROCFILE ]]; then
-    if [ $START_FOREMAN ]; then
+    if [ $START_FOREMAN = true ]; then
         echo "Procfile found (${PROCFILE}); starting foreman."
 
         export DJANGO_SETTINGS_MODULE="$DJANGO_SETTINGS_MODULE"
