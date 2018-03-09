@@ -15,7 +15,7 @@ APP_DB_PASS=$3
 USE_GEODJANGO=$4
 
 # Edit the following to change the version of PostgreSQL that is installed
-PG_VERSION=9.6
+PG_VERSION=10.3
 
 # Edit the following to change the version of PostGIS that is installed if
 # USE_GEODJANGO is true.
